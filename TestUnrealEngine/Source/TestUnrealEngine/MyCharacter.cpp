@@ -23,7 +23,7 @@ AMyCharacter::AMyCharacter()
 	SpringArm->SetRelativeRotation(FRotator(-35.f, 0.f, 0.f));
 
 	GetMesh()->SetRelativeLocationAndRotation(
-		FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f)); // 국룰세팅
+		FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f)); // 메쉬의 기본위치와 방향 국룰세팅
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SM(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 
