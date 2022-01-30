@@ -2,9 +2,9 @@
 
 
 #include "MyGameModeBase.h"
-#include "MyPawn.h"
+#include "MyCharacter.h"
 
 AMyGameModeBase::AMyGameModeBase()
 {
-	DefaultPawnClass = AMyPawn::StaticClass(); // 이런식으로 클래스를 받아오면 디폴트 폰으로 설정됨.
+	DefaultPawnClass = AMyCharacter::StaticClass(); // 이런식으로 클래스를 받아오면 디폴트 폰으로 설정됨.
 }
