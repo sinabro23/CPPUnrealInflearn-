@@ -30,6 +30,8 @@ public:
 	void LeftRight(float Value); // LeftRight 입력받았을때 호출할 함수.
 	void Yaw(float Value); // LeftRight 입력받았을때 호출할 함수.
 
+	void Attack();
+
 private:
 
 	UPROPERTY(VisibleAnywhere)

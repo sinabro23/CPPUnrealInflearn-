@@ -5,6 +5,16 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/PawnMovementComponent.h"
 
+UMyAnimInstance::UMyAnimInstance()
+{
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> AM(TEXT("AnimMontage'/Game/Animations/Greystone_Skeleton_Montage.Greystone_Skeleton_Montage'"));
+	if (AM.Succeeded())
+	{
+		AttackMontage = AM.Object;
+	}
+}
+
+// 매틱마다 실행함수
 void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	// Super는 이 클래스의 부모클래스 GENERATED_BODY()에 포함돼있는 기능
@@ -22,5 +32,14 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		{
 			IsFalling = Character->GetMovementComponent()->IsFalling();
 		}
+	}
+}
+
+// 클릭하는 순간에 실행되게
+void UMyAnimInstance::PlayAttackMontage()
+{
+	if (!Montage_IsPlaying(AttackMontage))
+	{
+		Montage_Play(AttackMontage, 1.f);
 	}
 }

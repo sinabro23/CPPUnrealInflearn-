@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "MyAnimInstance.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -59,6 +60,9 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	// 점프는 따로 함수를 구현하지 않아도됨. // 점프는 ACharacter클래스 안에 미리 구현 돼 있음
 	PlayerInputComponent->BindAction(TEXT("JUMP"), EInputEvent::IE_Pressed, this, &AMyCharacter::Jump);
+
+	// attack으로 바인딩한 마우스 왼쪽을 누르면 Attack이란 함수가 실행이 되게 하는것.
+	PlayerInputComponent->BindAction(TEXT("ATTACK"), EInputEvent::IE_Pressed, this, &AMyCharacter::Attack);
 }
 
 
@@ -93,4 +97,13 @@ void AMyCharacter::Yaw(float Value)
 	// 디테일의 UseController Rotation Yaw가 true로 체크 돼있기 때문에 사용가능
 	AddControllerYawInput(Value); // 카메라 마우스 움직임때문에 추가한 함수. 
 	// 캐릭터에 적용되는 함수가아니라 컨트롤러에 적용됨
+}
+
+void AMyCharacter::Attack()
+{
+	auto AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	if (AnimInstance)
+	{
+		AnimInstance->PlayAttackMontage();
+	}
 }
