@@ -4,6 +4,7 @@
 #include "MyAnimInstance.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "MyCharacter.h"
 
 UMyAnimInstance::UMyAnimInstance()
 {
@@ -28,10 +29,13 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		// GetVelocity은 폰이 기본적으로 들고있는 함수.
 		Speed = Pawn->GetVelocity().Size();
 
-		auto Character = Cast<ACharacter>(Pawn);
+		auto Character = Cast<AMyCharacter>(Pawn);
 		if (Character)
 		{
 			IsFalling = Character->GetMovementComponent()->IsFalling();
+
+			Vertical = Character->UpDownValue;
+			Horizontal = Character->LeftRightValue;
 		}
 	}
 }

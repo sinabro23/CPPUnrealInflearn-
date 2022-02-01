@@ -74,25 +74,22 @@ void AMyCharacter::UpDown(float Value)
 {
 	// 툴에서 프로젝트세팅에서 입력한 스케일값이 Value로 넘어옴
 
-	if (Value == 0.f)
-		return;
-
 	//UE_LOG(LogTemp, Warning, TEXT("UpDown %f"), Value) // Printf 같은 것
 
 	// transform을 설정할텐데 지금 여기서 바로 transform설정을 하면 유동적이지가 못함
 	// 예를들면 물에서 이동한다던지 산에서 이동한다할때는 달라질텐데 설정을 못함
 	// 그래서 이동에 관련된것도 하나의 컴포넌트로 따로 빼놨음
 
+	UpDownValue = Value;
 	AddMovementInput(GetActorForwardVector(), Value);
 }
 
 void AMyCharacter::LeftRight(float Value)
 {
-	if (Value == 0.f)
-		return;
 
 	//UE_LOG(LogTemp, Warning, TEXT("LeftRight %f"), Value) // Printf 같은 것
 
+	LeftRightValue = Value;
 	AddMovementInput(GetActorRightVector(), Value);
 }
 
