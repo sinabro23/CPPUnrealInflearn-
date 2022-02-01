@@ -41,6 +41,8 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	// 애님인스턴스의 몽타주가 끝나면 OnAttackMontageEnded함수를 실행해라. [델리게이트]
+	// OnAttackMontageEnded함수는 인자를 맞춰줘야함. (UAnimMontage* Montage, bool bInterrupted)
 	AnimInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::OnAttackMontageEnded);
 }
 
@@ -108,6 +110,9 @@ void AMyCharacter::Attack()
 
 	AnimInstance->PlayAttackMontage();
 	
+	AnimInstance->JumpToSection(AttackIndex);
+	AttackIndex = (AttackIndex + 1) % 3;
+
 	IsAttacking = true;
 }
 
