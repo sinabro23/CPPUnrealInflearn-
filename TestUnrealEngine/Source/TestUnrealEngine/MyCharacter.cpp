@@ -55,7 +55,7 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FName WeaponSocket(TEXT("hand_L_Socket"));
+	FName WeaponSocket(TEXT("hand_l_socket"));
 
 	auto CurrentWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector::ZeroVector, FRotator::ZeroRotator);
 
