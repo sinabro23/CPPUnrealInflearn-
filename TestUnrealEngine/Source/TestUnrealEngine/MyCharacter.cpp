@@ -10,6 +10,8 @@
 #include "DrawDebugHelpers.h"
 #include "MyWeapon.h"
 #include "MyStatComponent.h"
+#include "Components/WidgetComponent.h"
+#include "MyCharacterWidget.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -37,6 +39,19 @@ AMyCharacter::AMyCharacter()
 	}
 
 	Stat = CreateDefaultSubobject<UMyStatComponent>(TEXT("STAT"));
+
+	HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBAR"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.0f, 0.0f, 200.f));
+
+	HpBar->SetWidgetSpace(EWidgetSpace::Screen); //2D형식 화면에 항상 보이는
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("WidgetBlueprint'/Game/UI/WBP_HPBar.WBP_HpBar_C'"));
+	if (UW.Succeeded())
+	{
+		HpBar->SetWidgetClass(UW.Class);
+		HpBar->SetDrawSize(FVector2D(200.f, 50.f));
+	}
 }
 
 // Called when the game starts or when spawned
@@ -65,6 +80,15 @@ void AMyCharacter::PostInitializeComponents()
 	{
 		AnimInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::OnAttackMontageEnded);
 		AnimInstance->OnAttackHit.AddUObject(this, &AMyCharacter::AttackCheck);
+	}
+
+	HpBar->InitWidget(); 
+
+	// TODO (HP와 관련된)
+	auto HpWidget = Cast<UMyCharacterWidget>(HpBar->GetUserWidgetObject());
+	if (HpWidget)
+	{
+		HpWidget->BindHp(Stat);
 	}
 }
 
